@@ -5,8 +5,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red">#FF0000</color>
     <color name="green">#00FF00</color>
-    <color name="dark_gray">#4E4E4E</color>
-    <color name="dark_black">#292929</color>
+    <color name="dark_gray">#292929</color>
+    <color name="dark_black">#232323</color>
     <color name="dark_white">#D8D8D8</color>
+    <color name="darker_black">#191919</color>
 
 </resources>

@@ -4,7 +4,7 @@
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
         <item name="colorPrimary">@color/dark_black</item>
-        <item name="colorPrimaryVariant">@color/dark_gray</item>
+        <item name="colorPrimaryVariant">@color/dark_black</item>
         <item name="colorOnPrimary">@color/dark_white</item>
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <item name="colorSurface">@color/dark_black</item>
