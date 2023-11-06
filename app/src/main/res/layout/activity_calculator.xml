@@ -99,13 +99,12 @@
         app:layout_constraintVertical_bias="0.26" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/resultTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="10 USD"
-        android:textStyle="bold"
-        android:textSize="30dp"
         android:textColor="#EFEFEF"
+        android:textSize="30dp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -183,8 +182,9 @@
         android:layout_height="wrap_content"
         android:background="@null"
         android:ems="5"
-        android:inputType="numberSigned"
-        android:text="0"
+        android:inputType="numberDecimal"
+        android:text=""
+        android:hint="0"
         android:textSize="28dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView6"
         app:layout_constraintEnd_toEndOf="@+id/imageView6"
