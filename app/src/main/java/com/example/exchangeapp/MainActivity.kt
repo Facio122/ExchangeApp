@@ -10,6 +10,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.Window
 import android.view.WindowManager
+import android.widget.Button
 import android.widget.SearchView
 import android.widget.TableLayout
 import android.widget.TextView
@@ -35,10 +36,39 @@ class MainActivity : AppCompatActivity() {
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 
+        val currSortBtn = findViewById<Button>(R.id.btnSortCurrency)
+        val codeSortBtn = findViewById<Button>(R.id.btnSortCode)
+        val rateSortBtn = findViewById<Button>(R.id.btnSortRate)
+
+        val table = findViewById<TableLayout>(R.id.mainTable)
+
         fetchCurrencyData().start()
 
         val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.mainToolbar)
         setSupportActionBar(toolbar)
+
+        currSortBtn.setOnClickListener{
+            table.removeAllViews()
+            listExchangeRate.sortBy {
+                it.currency
+            }
+            createTable(listExchangeRate)
+        }
+        codeSortBtn.setOnClickListener{
+            table.removeAllViews()
+            listExchangeRate.sortBy {
+                it.code
+            }
+            createTable(listExchangeRate)
+        }
+        rateSortBtn.setOnClickListener{
+            table.removeAllViews()
+            listExchangeRate.sortBy {
+                it.mid
+            }
+            createTable(listExchangeRate)
+        }
+
     }
 
 
@@ -67,13 +97,14 @@ class MainActivity : AppCompatActivity() {
         runOnUiThread{
             kotlin.run {
                 if (request != null) {
+                    listExchangeRate = listOfData()
                     createTable(listOfData())
                 }
             }
         }
     }
 
-    private fun listOfData(): List<ExchangeRate>
+    private fun listOfData(): MutableList<ExchangeRate>
     {
         val dataList = mutableListOf<ExchangeRate>()
         dataList.addAll(request[0].rates)
@@ -105,9 +136,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean{
         var itemView = item.itemId
+        val table = findViewById<TableLayout>(R.id.mainTable)
         when(itemView){
             R.id.search ->{
                 showSearchDialogWindow()
+                table.removeAllViews()
+                createTable(listOfData())
             }
             R.id.calculator ->{
                 val intent = Intent(this, Calculator::class.java)
@@ -138,7 +172,10 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                filterList(newText)
+                val table = findViewById<TableLayout>(R.id.mainTable)
+                listExchangeRate = filterList(newText)
+                table.removeAllViews()
+                createTable(listExchangeRate)
                 return true
             }
         })
@@ -146,14 +183,13 @@ class MainActivity : AppCompatActivity() {
 
 
 
-    private fun filterList(query: String?)
+    private fun filterList(query: String?): MutableList<ExchangeRate>
+
     {
-        val table = findViewById<TableLayout>(R.id.mainTable)
         val filteredList = listOfData().filter {
             it.currency.contains(query!!, ignoreCase = true) || it.code.contains(query!!, ignoreCase = true)
         }
-        table.removeAllViews()
-        createTable(filteredList)
+        return filteredList.toMutableList()
     }
 
 }
